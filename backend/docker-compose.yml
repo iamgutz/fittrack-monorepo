@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    command: gunicorn app.wsgi:application --bind 0.0.0.0:8002
+    volumes:
+      - static_volume:/app/staticfiles
+      - data_volume:/app/data
+    expose:
+      - 8002
+    restart: always
+    env_file: ./app/dev.env
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/app/staticfiles
+    ports:
+     - 1337:80
+    depends_on:
+      - web
+  
+volumes:
+  static_volume:
+  data_volume:
+  postgres_data:

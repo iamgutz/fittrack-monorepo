@@ -1,0 +1,9 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "prettier.configPath": "./frontend/.prettierrc",
+  "prettier.ignorePath": "./frontend/.prettierignore"
+}
