@@ -13,6 +13,7 @@ const AppProvider = ({ children }: AppProviderProps) => {
   const dispatch = useAppDispatch();
   const [activeView, setActiveView] = useState(VIEWS.OVERVIEW);
   const [activeModal, setActiveModal] = useState('');
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const session = useAppSelector(selectSession);
   const profiles = useAppSelector(selectProfilesData) || [];
   const user = useAppSelector(selectUserData) || undefined;
@@ -42,6 +43,8 @@ const AppProvider = ({ children }: AppProviderProps) => {
         switchProfile,
         activeModal,
         setActiveModal,
+        drawerOpen,
+        setDrawerOpen,
       }}
     >
       {children}

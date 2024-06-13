@@ -1,5 +1,5 @@
 import Card from '@/components/Card';
-import bgPattern from '@/assets/bg-pattern.svg';
+import bgPattern from '@/assets/bg-pattern.png';
 import Avatar from '@/components/Avatar';
 import { calculateAge } from '@/app/utils';
 import Divider from '@/components/Divider';

@@ -28,6 +28,8 @@ interface AppContextValue {
   switchProfile: (pid: string) => void;
   activeModal: string;
   setActiveModal: (modalName: string) => void;
+  drawerOpen: boolean;
+  setDrawerOpen: (isOpen: boolean) => void;
 }
 
 export const AppContext = createContext<AppContextValue | undefined>(undefined);

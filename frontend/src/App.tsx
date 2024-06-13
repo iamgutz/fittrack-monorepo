@@ -1,9 +1,9 @@
+import { Drawer } from 'flowbite-react';
 import { VIEWS, useAppContext } from '@/contexts/AppContext';
-import { HiMiniSquares2X2 } from 'react-icons/hi2';
-import { BiSolidBarChartAlt2 } from 'react-icons/bi';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
-import Sidebar from './components/Sidebar';
+import { RiMenuUnfoldLine } from 'react-icons/ri';
+
 import Overview from './views/Overview';
 import NavBar from './components/NavBar';
 import Avatar from './components/Avatar';
@@ -11,39 +11,28 @@ import { Dropdown } from 'flowbite-react';
 import WelcomeUser from './components/WelcomeUser';
 import AppLogo from './components/AppLogo';
 import ProgressView from './views/Progress';
+import AppSidebar from './AppSidebar';
+import Card from './components/Card';
 
 function App() {
-  const { activeView, setActiveView, profile, profiles, user, switchProfile } = useAppContext();
+  const { activeView, profile, profiles, user, switchProfile, setDrawerOpen, drawerOpen } =
+    useAppContext();
 
   return (
     <div className="flex flex-col w-full h-full p-3 mx-auto">
-      <div className="flex h-full gap-3">
-        <Sidebar className="hidden md:flex flex-col w-64 pt-3">
-          <AppLogo />
-          <Sidebar.Items>
-            <Sidebar.Item active={activeView === VIEWS.OVERVIEW}>
-              <button
-                className="flex items-center gap-3 w-full"
-                onClick={() => setActiveView(VIEWS.OVERVIEW)}
-              >
-                <HiMiniSquares2X2 size={20} />
-                <span className="invisible md:visible">Overview</span>
-              </button>
-            </Sidebar.Item>
-            <Sidebar.Item active={activeView === VIEWS.PROGRESS}>
-              <button
-                className="flex items-center gap-3 w-full"
-                onClick={() => setActiveView(VIEWS.PROGRESS)}
-              >
-                <BiSolidBarChartAlt2 size={20} />
-                <span>Progress</span>
-              </button>
-            </Sidebar.Item>
-          </Sidebar.Items>
-        </Sidebar>
+      <div className="flex h-full gap-3 relative">
+        <Card className="w-64 pt-3 hidden md:flex h-[calc(100vh-1.5rem)] sticky top-0">
+          <AppSidebar />
+        </Card>
         <div className="flex flex-col flex-1 overflow-y-auto">
           <NavBar>
-            <div>
+            <div className="flex items-center gap-3">
+              <button
+                className="h-10 w-10 flex md:hidden justify-center items-center rounded-full hover:bg-gray-200"
+                onClick={() => setDrawerOpen(true)}
+              >
+                <RiMenuUnfoldLine size={20} />
+              </button>
               <AppLogo className="md:hidden" />
             </div>
             <div className="flex gap-3">
@@ -104,6 +93,12 @@ function App() {
           </div>
         </div>
       </div>
+      <Drawer
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+      >
+        <AppSidebar />
+      </Drawer>
     </div>
   );
 }
