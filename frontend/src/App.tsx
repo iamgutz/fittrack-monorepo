@@ -1,9 +1,8 @@
 import { Drawer } from 'flowbite-react';
 import { VIEWS, useAppContext } from '@/contexts/AppContext';
+import _isEmpty from 'lodash/isEmpty';
 import { IoMdNotificationsOutline } from 'react-icons/io';
-import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
 import { RiMenuUnfoldLine } from 'react-icons/ri';
-
 import Overview from './views/Overview';
 import NavBar from './components/NavBar';
 import Avatar from './components/Avatar';
@@ -13,10 +12,23 @@ import AppLogo from './components/AppLogo';
 import ProgressView from './views/Progress';
 import AppSidebar from './AppSidebar';
 import Card from './components/Card';
+import { useState } from 'react';
+import notificationsMock from '@/mocks/notifications.json';
+import StatusIcon, { StatusIconVariant } from './components/StatusIcon';
+import IconButton from './components/IconButton';
+import clsx from 'clsx';
 
 function App() {
   const { activeView, profile, profiles, user, switchProfile, setDrawerOpen, drawerOpen } =
     useAppContext();
+
+  const [notifications, setNotifications] = useState(notificationsMock);
+  const hasNotifications = !_isEmpty(notifications);
+
+  const removeNotification = (id: number) => {
+    const filtered = notifications.filter(n => n.id !== id);
+    setNotifications(filtered);
+  };
 
   return (
     <div className="flex flex-col w-full h-full p-3 mx-auto">
@@ -36,12 +48,30 @@ function App() {
               <AppLogo className="md:hidden" />
             </div>
             <div className="flex gap-3">
-              <button className="h-10 w-10 flex justify-center items-center rounded-full bg-gray-100 hover:bg-gray-200">
-                <IoChatbubbleEllipsesOutline size={20} />
-              </button>
-              <button className="h-10 w-10 flex justify-center items-center rounded-full bg-gray-100 hover:bg-gray-200">
-                <IoMdNotificationsOutline size={20} />
-              </button>
+              <Dropdown
+                label=""
+                className={clsx([!hasNotifications && 'hidden'])}
+                renderTrigger={() => (
+                  <IconButton notified={hasNotifications}>
+                    <IoMdNotificationsOutline size={20} />
+                  </IconButton>
+                )}
+              >
+                {notifications.map(n => {
+                  return (
+                    <Dropdown.Item
+                      key={n.id}
+                      onClick={() => removeNotification(n.id)}
+                    >
+                      <StatusIcon
+                        variant={n.type as StatusIconVariant}
+                        className="mr-2"
+                      />
+                      {n.text}
+                    </Dropdown.Item>
+                  );
+                })}
+              </Dropdown>
 
               {user && (
                 <Dropdown

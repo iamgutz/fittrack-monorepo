@@ -1,0 +1,4 @@
+[
+  { "id": 1, "text": "New update available", "type": "info" },
+  { "id": 2, "text": "Record updated", "type": "success" }
+]

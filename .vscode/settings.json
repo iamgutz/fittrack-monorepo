@@ -5,5 +5,6 @@
     "*.css": "tailwindcss"
   },
   "prettier.configPath": "./frontend/.prettierrc",
-  "prettier.ignorePath": "./frontend/.prettierignore"
+  "prettier.ignorePath": "./frontend/.prettierignore",
+  "cSpell.words": ["clsx"]
 }
