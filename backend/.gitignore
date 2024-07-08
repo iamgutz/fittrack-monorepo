@@ -13,7 +13,6 @@ __pycache__
 
 # Ignore secret keys and sensitive information
 *.secret_key
-.env
 
 # Ignore log files
 *.log
