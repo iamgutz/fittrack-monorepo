@@ -1,18 +1,19 @@
-import { gql } from "@apollo/client";
-import BaseApi from "../../api/baseApi";
+import { gql } from '@apollo/client';
+import BaseApi from '../../api/baseApi';
 
 export interface Profile {
-    id: string;
-    name: string;
-    birthdate: string;
-    gender: string;
-    createdAt: string;
-    updatedAt: string;
+  id: string;
+  name: string;
+  birthdate: string;
+  gender: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 class ProfilesApi extends BaseApi {
-    async fetchProfilesByUserId(uid: string): Promise<Profile[]> {
-        const response = await this.query(gql`
+  async fetchProfilesByUserId(uid: string): Promise<Profile[]> {
+    const response = await this.query(
+      gql`
             query($uid: ID!) { 
                 profiles (userId: $uid) { 
                     id,
@@ -26,10 +27,12 @@ class ProfilesApi extends BaseApi {
                     }
                 } 
             }
-        `, { uid });
+        `,
+      { uid },
+    );
 
-        return response.data.profiles;
-    }
+    return response.data.profiles;
+  }
 }
 
 export default ProfilesApi;
