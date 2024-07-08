@@ -15,7 +15,7 @@ from decouple import Config, RepositoryEnv
 
 # Setting Environment Variables
 IS_PRODUCTION = True if os.getenv("ENV", "development") == "production" else False
-DOT_ENV_FILE = "app/prod.env" if IS_PRODUCTION else "app/dev.env"
+DOT_ENV_FILE = "app/.env.production" if IS_PRODUCTION else "app/.env"
 env_config = Config(RepositoryEnv(DOT_ENV_FILE))
 config = env_config.get
 
@@ -38,6 +38,9 @@ CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS").split(",")
 # Allow credentials (cookies, authorization headers) to be included in CORS requests
 CORS_ALLOW_CREDENTIALS = True
 #CORS_ALLOW_ALL_ORIGINS = True
+
+# A list of trusted origins for unsafe requests
+CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS").split(",")
 
 # Application definition
 

@@ -1,10 +1,7 @@
 version: '3.8'
 services:
   web:
-    build:
-      context: .
-      args:
-        INSTALL_PROD_DEPENDENCIES: "true"
+    build: .
     command: gunicorn app.wsgi:application --bind 0.0.0.0:8002
     volumes:
       - static_volume:/app/staticfiles
@@ -12,8 +9,8 @@ services:
     ports:
       - 8002:8002
     restart: always
-    env_file: ./app/prod.env
-  
+    env_file: ./app/.env.production
+
 volumes:
   static_volume:
   data_volume:
