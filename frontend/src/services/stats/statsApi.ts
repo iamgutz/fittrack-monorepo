@@ -2,38 +2,38 @@ import { gql } from '@apollo/client';
 import BaseApi from '../../api/baseApi';
 
 interface LatestVariationsType {
-    muscle: number;
-    bodyFat: number;
-    muscleKg: number;
-    bodyFatKg: number;
-    weight: number;
+  muscle: number;
+  bodyFat: number;
+  muscleKg: number;
+  bodyFatKg: number;
+  weight: number;
 }
 interface PieChartType {
-    name: string;
-    value: string;
+  name: string;
+  value: string;
 }
 interface LineChartType {
-    date: string;
-    weight: string;
+  date: string;
+  weight: string;
 }
 export interface StatsType {
-    dateFirst: string;
-    dateLast: string;
-    latestVariations: LatestVariationsType;
-    pieChart: PieChartType[];
-    lineChart: LineChartType[];
+  dateFirst: string;
+  dateLast: string;
+  latestVariations: LatestVariationsType;
+  pieChart: PieChartType[];
+  lineChart: LineChartType[];
 }
 
 export interface FetchParams {
-    profileId: string;
-    startDate?: string;
-    endDate?: string;
+  profileId: string;
+  startDate?: string;
+  endDate?: string;
 }
 
 class StatsApi extends BaseApi {
-    async fetchStats(params: FetchParams): Promise<StatsType> {
-        const response = await this.query(
-            gql`
+  async fetchStats(params: FetchParams): Promise<StatsType> {
+    const response = await this.query(
+      gql`
             query($pId: ID!, $sDate: String, $eDate: String) { 
                 stats (profileId: $pId, startDate: $sDate, endDate: $eDate) { 
                     dateFirst,
@@ -60,16 +60,22 @@ class StatsApi extends BaseApi {
                     },
                     lineChart {
                         date,
-                        weight
+                        muscle,
+                        muscleKg,
+                        bodyFat,
+                        bodyFatKg,
+                        weight,
+                        bmi,
+                        visceral,
                     }
                 } 
             }
         `,
-            { pId: params.profileId, sDate: params.startDate, eDate: params.endDate },
-        );
+      { pId: params.profileId, sDate: params.startDate, eDate: params.endDate },
+    );
 
-        return response.data.stats;
-    }
+    return response.data.stats;
+  }
 }
 
 export default StatsApi;

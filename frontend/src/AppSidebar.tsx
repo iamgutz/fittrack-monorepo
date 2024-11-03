@@ -8,6 +8,10 @@ import clsx from 'clsx';
 
 export default function AppSidebar({ className }: { className?: string }) {
   const { activeView, setActiveView, setDrawerOpen } = useAppContext();
+  const onChangeView = (view: string) => {
+    setActiveView(view);
+    setDrawerOpen(false);
+  };
   return (
     <Sidebar className={clsx(['flex flex-col', className])}>
       <div className="flex items-center justify-between gap-3">
@@ -23,7 +27,7 @@ export default function AppSidebar({ className }: { className?: string }) {
         <Sidebar.Item active={activeView === VIEWS.OVERVIEW}>
           <button
             className="flex items-center gap-3 w-full"
-            onClick={() => setActiveView(VIEWS.OVERVIEW)}
+            onClick={() => onChangeView(VIEWS.OVERVIEW)}
           >
             <HiMiniSquares2X2 size={20} />
             <span>Overview</span>
@@ -32,7 +36,7 @@ export default function AppSidebar({ className }: { className?: string }) {
         <Sidebar.Item active={activeView === VIEWS.PROGRESS}>
           <button
             className="flex items-center gap-3 w-full"
-            onClick={() => setActiveView(VIEWS.PROGRESS)}
+            onClick={() => onChangeView(VIEWS.PROGRESS)}
           >
             <BiSolidBarChartAlt2 size={20} />
             <span>Progress</span>

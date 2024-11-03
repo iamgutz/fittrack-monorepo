@@ -1,6 +1,8 @@
 import { useAppSelector } from '@/app/hooks';
 import Card from '@/components/Card';
 import { selectStatsData } from '@/services/stats/statsSlice';
+import { Select } from 'flowbite-react';
+import { useState } from 'react';
 import {
   LineChart,
   Line,
@@ -12,14 +14,58 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
+const attributeOptions = [
+  {
+    label: 'Weight',
+    key: 'weight',
+  },
+  {
+    label: 'Muscle %',
+    key: 'muscle',
+  },
+  {
+    label: 'Body Fat %',
+    key: 'bodyFat',
+  },
+  {
+    label: 'Muscle Kg',
+    key: 'muscleKg',
+  },
+  {
+    label: 'Body Fat Kg',
+    key: 'bodyFatKg',
+  },
+  {
+    label: 'Visceral',
+    key: 'visceral',
+  },
+  {
+    label: 'BMI',
+    key: 'bmi',
+  },
+];
+
 export default function ProgressChartCard() {
   const stats = useAppSelector(selectStatsData);
   const lineChartData = (stats?.lineChart as any) || null;
+  const [attribute, setAttribute] = useState('weight');
 
   return (
     <Card className="w-full">
       <div className="flex flex-col items-center justify-center gap-3 py-3 h-full">
-        <h6>Last 10 records progress</h6>
+        <div className="w-full flex items-center justify-between px-6">
+          <h6>Last 10 records progress</h6>
+          <Select onChange={e => setAttribute(e.target.value)}>
+            {attributeOptions.map(op => (
+              <option
+                key={op.key}
+                value={op.key}
+              >
+                {op.label}
+              </option>
+            ))}
+          </Select>
+        </div>
         <ResponsiveContainer
           width="100%"
           height="100%"
@@ -50,7 +96,7 @@ export default function ProgressChartCard() {
             <Legend />
             <Line
               type="monotone"
-              dataKey="weight"
+              dataKey={attribute}
               activeDot={{ r: 8 }}
             />
           </LineChart>

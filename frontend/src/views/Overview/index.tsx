@@ -19,11 +19,11 @@ export default function Overview() {
     <>
       <div className="flex flex-col md:flex-row gap-3 mb-3">
         <ProfileCard profile={profile} />
-        <ProgressOverviewCard />
+        <ProgressChartCard />
       </div>
       <div className="flex flex-col md:flex-row gap-3 mb-3">
-        <ProgressChartCard />
         <BodyCompositionCard />
+        <ProgressOverviewCard />
       </div>
     </>
   );

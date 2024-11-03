@@ -23,10 +23,16 @@ export default function RecordsTable({ columns }: RecordsTableProps) {
     <Table
       striped
       hoverable
+      className="relative"
     >
       <Table.Head>
         {columns.map(column => (
-          <Table.HeadCell key={column.key}>{column.label}</Table.HeadCell>
+          <Table.HeadCell
+            className="sticky top-0 z-10"
+            key={column.key}
+          >
+            {column.label}
+          </Table.HeadCell>
         ))}
       </Table.Head>
       <Table.Body className="divide-y">

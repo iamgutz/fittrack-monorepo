@@ -12,7 +12,10 @@ export default function ProgressView() {
   return (
     <div className="flex flex-col gap-3">
       <NavBar className="!bg-gray-200 !rounded-md">
-        <TextInput icon={RiSearchLine} />
+        <TextInput
+          icon={RiSearchLine}
+          className="flex-1"
+        />
         <Button
           color="blue"
           onClick={() => setActiveModal(MODALS.ADD_RECORD)}
@@ -24,7 +27,9 @@ export default function ProgressView() {
           Add Record
         </Button>
       </NavBar>
-      <RecordsTable columns={RECORDS_TABLE_COLUMNS} />
+      <div className="overflow-x-auto max-w-full">
+        <RecordsTable columns={RECORDS_TABLE_COLUMNS} />
+      </div>
       <Modals />
     </div>
   );
